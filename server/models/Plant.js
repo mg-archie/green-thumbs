@@ -10,11 +10,10 @@ const plantSchema = new Schema({
     required: true,
     trim: true,
   },
-  // saved plant id from API (needs to be changed with our API) - just a template
-  /*plantId: {
+  plantId: {
     type: String,
     required: true,
-  },*/
+  },
   image: {
     type: String,
   },
