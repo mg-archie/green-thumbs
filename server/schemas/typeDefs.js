@@ -18,7 +18,7 @@ type Plant {
 }
 
 type Comment{
-
+ commentBody
 }
 
 type Blog {
