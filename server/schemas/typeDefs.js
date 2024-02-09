@@ -25,16 +25,26 @@ type Blog {
     
 }
 
-type Auth {
-  token: ID!
-  user: User
+// type Auth {
+//   token: ID!
+//   user: User
+// }
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
 
 type Query {
-  me: User
-  users: [User]
-  user(username: String!): User
+  login(email: String!, password: String!): AuthPayload!
 }
+
+
+// type Query {
+//   me: User
+//   users: [User]
+//   user(username: String!): User
+// }
 
 input PlantInput {
   plantId: String!
@@ -47,7 +57,8 @@ input PlantInput {
 
 type Mutation {
   login(email: String!, password: String!): Auth
-  addUser(username: String!, email: String!, password: String!): Auth
+  // addUser(username: String!, email: String!, password: String!): Auth
+  addUser(username: String!, email: String!, password: String!): AuthPayload!
   favouritedPlants(plantInput: PlantInput): User
   removePlant(plantId: ID!): User
 }
