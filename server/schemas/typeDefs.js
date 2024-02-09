@@ -4,7 +4,7 @@ type User {
   username: String
   email: String
   plantCount: Int
-  favouritedPlants: [Plant]
+  savedPlants: [Plant]
 }
 
 type Plant {
@@ -38,7 +38,7 @@ type Query {
 
 input PlantInput {
   plantId: String!
-  authors: [String]
+  name: [String]
   description: String
   title: String!
   image: String
@@ -48,7 +48,7 @@ input PlantInput {
 type Mutation {
   login(email: String!, password: String!): Auth
   addUser(username: String!, email: String!, password: String!): Auth
-  favouritedPlants(plantInput: PlantInput): User
+  savePlants(plantInput: PlantInput): User
   removePlant(plantId: ID!): User
 }
 `;

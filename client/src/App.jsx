@@ -9,7 +9,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar';
 import Auth from './utils/auth';
 
 const httpLink = createHttpLink({

@@ -1,6 +1,4 @@
-const router = require('express').Router();
-const userRoutes = require('./user-routes');
+const typeDefs = require('./typeDefs');
+const resolvers = require('./resolvers');
 
-router.use('/users', userRoutes);
-
-module.exports = router;
+module.exports = { typeDefs, resolvers };
