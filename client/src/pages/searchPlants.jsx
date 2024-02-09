@@ -12,7 +12,7 @@ import { useMutation } from '@apollo/client';
 import { SAVE_PLANT } from '../utils/mutations';
 
 import Auth from '../utils/auth';
-import { searchPlants } from '../utils/API';
+import { savePlant, searchPerenual } from '../utils/API';
 import { savePlantIds, getSavedPlantIds } from '../utils/localStorage';
 
 const SearchPlants = () => {
@@ -32,7 +32,7 @@ const SearchPlants = () => {
       return false;
     }
     try {
-      const response = await searchPlants(searchInput);
+      const response = await searchPerenual(searchInput);
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }

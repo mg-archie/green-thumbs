@@ -18,11 +18,11 @@ const plantSchema = new Schema({
     type: String,
   },
   lowLight: {
-    type: boolean,
+    type: Boolean,
     required: true,
   },
   indoor: {
-    type: boolean,
+    type: Boolean,
     required: true,
   },
 });

@@ -1,30 +1,45 @@
-export const getSavedBookIds = () => {
-    const savedBookIds = localStorage.getItem('saved_books')
-      ? JSON.parse(localStorage.getItem('saved_books'))
+export const getSavedPlantIds = () => {
+    const savedPlantsIds = localStorage.getItem('saved_plants')
+      ? JSON.parse(localStorage.getItem('saved_plants'))
       : [];
   
-    return savedBookIds;
+    return savedPlantsIds;
   };
   
-  export const saveBookIds = (bookIdArr) => {
-    if (bookIdArr.length) {
-      localStorage.setItem('saved_books', JSON.stringify(bookIdArr));
+  export const savePlantIds = (plantIdArr) => {
+    if (plantIdArr.length) {
+      localStorage.setItem('saved_plants', JSON.stringify(plantIdArr));
     } else {
-      localStorage.removeItem('saved_books');
+      localStorage.removeItem('saved_plants');
     }
   };
   
-  export const removeBookId = (bookId) => {
-    const savedBookIds = localStorage.getItem('saved_books')
-      ? JSON.parse(localStorage.getItem('saved_books'))
+  export const removePlantId = (plantId) => {
+    const savedPlantIds = localStorage.getItem('saved_plants')
+      ? JSON.parse(localStorage.getItem('saved_plants'))
       : null;
   
-    if (!savedBookIds) {
+    if (!savedPlantIds) {
       return false;
     }
   
-    const updatedSavedBookIds = savedBookIds?.filter((savedBookId) => savedBookId !== bookId);
-    localStorage.setItem('saved_books', JSON.stringify(updatedSavedBookIds));
+    const updatedSavedPlantIds = savedPlantIds?.filter((savedPlantId) => savedPlantId !== plantId);
+    localStorage.setItem('saved_plants', JSON.stringify(updatedSavedPlantIds));
+  
+    return true;
+  };
+
+  export const removeBlogId = (blogId) => {
+    const savedBlogIds = localStorage.getItem('saved_blogs')
+      ? JSON.parse(localStorage.getItem('saved_blogs'))
+      : null;
+  
+    if (!savedBlogIds) {
+      return false;
+    }
+  
+    const updatedSavedBlogIds = savedBlogIds?.filter((savedBlogId) => savedBlogId !== blogId);
+    localStorage.setItem('saved_blogs', JSON.stringify(updatedSavedBlogIds));
   
     return true;
   };
