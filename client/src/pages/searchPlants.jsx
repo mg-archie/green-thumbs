@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
   Container,
+  InputGroup,
   Col,
-  Form,
+  FormControl,
   Button,
   Card,
-  Row
+  Row,
+  Dropdown
 } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
@@ -62,36 +64,40 @@ const SearchPlants = () => {
   };
   return (
     <>
-      <div className="text-light bg-dark p-5">
-        <Container>
-          <h1>Search for Plants!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a plant'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Container>
-      </div>
+    <div>
+      <Container className="text-light border-2 border-white mt-5 searchB rounded p-5">
+        <InputGroup>
+          <FormControl
+            aria-label="Text input with segmented dropdown button"
+            placeholder="Search for a plant"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          <Button variant="outline-secondary border border-white searchB" onClick={handleFormSubmit} >
+            Search
+          </Button>
+          <Dropdown as={InputGroup.Append}>
+            <Button variant="outline-secondary border border-white">
+              <span className="visually-hidden">Toggle Dropdown</span>
+            </Button>
+            <Dropdown.Toggle split variant="outline-secondary border border-white" id="dropdown-split-basic" />
+            <Dropdown.Menu>
+              <Dropdown.Item href="#">Action</Dropdown.Item>
+              <Dropdown.Item href="#">Another action</Dropdown.Item>
+              <Dropdown.Item href="#">Something else here</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="#">Separated link</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </InputGroup>
+      </Container>
+    </div>
 
       <Container>
         <h2 className='pt-5'>
           {searchedPlants.length
             ? `Viewing ${searchedPlants.length} results:`
-            : 'Search for a plant to begin'}
+            : ''}
         </h2>
         <Row>
           {searchedPlants.map((plant) => {
