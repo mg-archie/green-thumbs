@@ -41,9 +41,15 @@ input SavedPlantInput {
 }
 
 type Query {
-  me: User
+  login(email: String!, password: String!): AuthPayload!
 }
 
+type Query {
+   me: User
+   users: [User]
+   user(username: String!): User
+ }
+ 
 type Mutation {
   
   login(email: String!, password: String!): AuthPayload!
