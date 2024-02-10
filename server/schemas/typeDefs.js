@@ -27,13 +27,7 @@ type Query {
   login(email: String!, password: String!): AuthPayload!
 }
 
-type Query {
-   me: User
-   users: [User]
-   user(username: String!): User
- }
-
-input PlantInput {
+input SavedPlantInput {
   plantId: String!
   name: String!
   description: String!

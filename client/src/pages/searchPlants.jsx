@@ -39,8 +39,7 @@ const SearchPlants = () => {
         throw new Error('Something went wrong!');
       }
       const plantData = await response.json();
-      setSearchedPlants(plantData.data);
-      console.log(plantData);
+      setSearchedPlants(plantData);
       setSearchInput('');
     } catch (err) {
       console.error(err);
