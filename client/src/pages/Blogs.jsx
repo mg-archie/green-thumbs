@@ -42,9 +42,8 @@ const SavedBlogs = () => {
   
   return (
     <>
-      <div fluid='true' className="text-light bg-dark p-5">
+      <div fluid='true' className="text-light p-5">
         <Container>
-          <h1>Viewing saved blogs!</h1>
         </Container>
       </div>
       <Container>
