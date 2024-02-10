@@ -61,12 +61,14 @@ const resolvers = {
       throw new AuthenticationError();
     },
     //plantId needs to be changed once we figure out API
-    removePlant: async (parent, { plantId }, context) => {
+    removePlant: async (parent, { _id }, context) => {
+      console.log('_id', _id);
+      console.log(context.user);
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { favouritedPlants: { plantId: plantId } } },
-          { new: true }
+          { $pull: { favouritedPlants: _id } },
+          { new: true, runValidators: true }
         );
         return updatedUser;
       }
