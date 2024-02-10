@@ -5,6 +5,13 @@ type User {
   email: String
   plantCount: Int
   favouritedPlants: [Plant]
+  blogs: [Blog]
+}
+
+type Blog {
+  _id: ID!
+  blogAuthor: String
+  blogText: String
 }
 
 type Plant {
@@ -23,9 +30,7 @@ type AuthPayload {
   user: User!
 }
 
-type Query {
-  me: User
-}
+
 
 input SavedPlantInput {
   plantId: String!
@@ -35,12 +40,17 @@ input SavedPlantInput {
   link: String
 }
 
+type Query {
+  me: User
+}
+
 type Mutation {
   
   login(email: String!, password: String!): AuthPayload!
   addUser(username: String!, email: String!, password: String!): AuthPayload!
   removePlant(_id: ID!): User!
   savePlant(_id: ID!): User!
+  addBlog(blogText: String!): Blog
 }
 `;
 

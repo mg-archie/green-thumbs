@@ -73,7 +73,34 @@ const resolvers = {
         return updatedUser;
       }
       throw new AuthenticationError();
-    }
+    },
+    addBlog: async (parent, { blogText }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to add a blog.');
+      }
+  
+      try {
+        // Create a new blog
+        const newBlog = new Blog({
+          blogText,
+          blogAuthor: context.user._id, 
+        });
+  
+        // Save the blog to the database
+        await newBlog.save();
+  
+        // Add the blog to the user's list of blogs
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $push: { blogs: newBlog._id } }, 
+          { new: true }
+        );
+  
+        return user;
+      } catch (error) {
+        throw new Error('Failed to add blog: ' + error.message);
+      }
+    },
   },
 };
 
