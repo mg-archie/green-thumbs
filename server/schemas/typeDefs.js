@@ -51,6 +51,7 @@ type Mutation {
   removePlant(_id: ID!): User!
   savePlant(_id: ID!): User!
   addBlog(blogText: String!): Blog
+  removeBlog(_id: ID!): User!
 }
 `;
 
