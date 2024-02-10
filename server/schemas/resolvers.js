@@ -101,6 +101,20 @@ const resolvers = {
         throw new Error('Failed to add blog: ' + error.message);
       }
     },
+
+    removeBlog: async (parent, { _id }, context) => {
+      console.log('_id', _id);
+      console.log(context.user);
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { blogs: _id } },
+          { new: true, runValidators: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError();
+    },
   },
 };
 
