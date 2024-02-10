@@ -39,7 +39,7 @@ type Mutation {
   
   login(email: String!, password: String!): AuthPayload!
   addUser(username: String!, email: String!, password: String!): AuthPayload!
-  
+  removePlant(_id: ID!): User!
   savePlant(_id: ID!): User!
 }
 `;
