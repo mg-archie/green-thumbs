@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
-
-const plantSchema = require('./Plant');
 const bcrypt = require('bcrypt');
+const plantSchema = require('./Plant');
+
 
 const userSchema = new Schema({
     username: {
@@ -50,7 +50,8 @@ const userSchema = new Schema({
 );
 
 // hash user password
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) 
+{console.log(this.isNew);
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
@@ -58,6 +59,15 @@ userSchema.pre('save', async function (next) {
 
   next();
 });
+
+userSchema.pre('insertMany', async function (next, docs){
+  for (let i=0; i<docs.length; i++){
+    const doc = docs[i];
+    const saltRounds = 10;
+    doc.password = await bcrypt.hash(doc.password, saltRounds);
+  }
+  next()
+})
 
 // custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {

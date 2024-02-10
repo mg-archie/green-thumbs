@@ -3,6 +3,7 @@ const { User } = require('../models');
 // import sign token function from auth
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require("apollo-server-express");
+const bcrypt = require('bcrypt');
 
 const resolvers = {
   Query: {
@@ -10,7 +11,7 @@ const resolvers = {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
-      throw AuthenticationError;
+      throw new AuthenticationError();
     },
     users: async () => {
       return User.find()
@@ -32,13 +33,13 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw AuthenticationError;
+        throw new AuthenticationError();
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw AuthenticationError;
+        throw new AuthenticationError();
       }
 
       const token = signToken(user);
@@ -57,7 +58,7 @@ const resolvers = {
           );
           return updatedUser;
         }
-      throw AuthenticationError;
+      throw new AuthenticationError();
     },
     //plantId needs to be changed once we figure out API
     removePlant: async (parent, { plantId }, context) => {
@@ -69,7 +70,7 @@ const resolvers = {
         );
         return updatedUser;
       }
-      throw AuthenticationError;
+      throw new AuthenticationError();
     }
   },
 };
