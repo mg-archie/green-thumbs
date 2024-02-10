@@ -1,77 +1,76 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import { Modal, Tab, Nav, Offcanvas, Button, Form, FormControl } from 'react-bootstrap';
 import SignUpForm from './SignUp';
 import LoginForm from './Login';
-
+import { PiPlantThin, PiPottedPlantThin } from "react-icons/pi";
 import Auth from '../utils/auth';
 
 const AppNavbar = () => {
-  // set modal display state
   const [showModal, setShowModal] = useState(false);
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   return (
-    <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
-        <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            Green Thumbs 
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
-            <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/'>
-                Search For Plants
-              </Nav.Link>
-              {/* if user is logged in show saved plants and logout */}
+    <nav className="navbar fixed-top navB border-1 border-white rounded">
+      <div className="container-fluid justify-content-center  ">
+        <Link className="navbar-brand title" to="/">Green<PiPlantThin className="icon" style={{ fontsize: '4rem' }} /> Thumbs</Link>
+        <Button className="navbar-toggler border border-2 border-white" type="button" onClick={() => setShowOffcanvas(true)} aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span className=""><PiPottedPlantThin className="icon2" style={{ fontsize: '4rem' }}/></span>
+        </Button>
+        <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="end" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" className="offcanvas offcanvas-end">
+          <div className="offcanvas-header">
+            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+            <Button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onClick={() => setShowOffcanvas(false)}></Button>
+          </div>
+          <div className="offcanvas-body">
+            <Nav className="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+              {/* Conditional rendering based on auth status */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/saved'>
-                    See Your Plants
-                  </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                  <Link className="nav-link" to="/saved">See Your Plants</Link>
+                  <Link className="nav-link" onClick={Auth.logout} to="/">Logout</Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                <Link className="nav-link" to="#" onClick={() => setShowModal(true)}>Login/Sign Up</Link>
               )}
             </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      {/* set modal data up */}
+            <Form className="d-flex mt-3" role="search">
+              <FormControl type="search" placeholder="Search" aria-label="Search" className="me-2" />
+              <Button variant="outline-success" type="submit">Search</Button>
+            </Form>
+          </div>
+        </Offcanvas>
+      </div>
+
+      {/* Modal for Login/SignUp */}
       <Modal
-        size='lg'
+        size="lg"
         show={showModal}
         onHide={() => setShowModal(false)}
-        aria-labelledby='signup-modal'>
-        {/* tab container to do either signup or login component */}
-        <Tab.Container defaultActiveKey='login'>
+        aria-labelledby="signup-modal"
+      >
+        <Tab.Container defaultActiveKey="login">
           <Modal.Header closeButton>
-            <Modal.Title id='signup-modal'>
-              <Nav variant='pills'>
-                <Nav.Item>
-                  <Nav.Link eventKey='login'>Login</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
-                </Nav.Item>
-              </Nav>
+            <Modal.Title id="signup-modal">
+              Login/Sign Up
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Tab.Content>
-              <Tab.Pane eventKey='login'>
+              <Tab.Pane eventKey="login">
                 <LoginForm handleModalClose={() => setShowModal(false)} />
               </Tab.Pane>
-              <Tab.Pane eventKey='signup'>
+              <Tab.Pane eventKey="signup">
                 <SignUpForm handleModalClose={() => setShowModal(false)} />
               </Tab.Pane>
             </Tab.Content>
           </Modal.Body>
         </Tab.Container>
       </Modal>
-    </>
+    </nav>
   );
 };
 
 export default AppNavbar;
+

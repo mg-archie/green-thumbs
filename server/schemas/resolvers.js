@@ -45,13 +45,14 @@ const resolvers = {
 
       return { token, user };
     },
-    savePlant: async (parent, { plantInput }, context) => {
-      console.log('plantInput: ', plantInput);
-      // console.log(context.user);
+    savePlant: async (parent, { _id }, context) => {
+      console.log('plantInput: ', _id);
+      console.log(context.user);
       if (context.user) {
+        console.log(context.user._id);
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { favouritedPlants: plantInput } },
+          { $push: { favouritedPlants: _id } },
           { new: true, runValidators: true }
           );
           return updatedUser;
