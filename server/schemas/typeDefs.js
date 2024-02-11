@@ -56,10 +56,10 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload!
   addUser(username: String!, email: String!, password: String!): AuthPayload!
   removePlant(_id: ID!): User!
-  savePlant(_id: ID!): User!
-  addBlog(blogText: String!): Blog
+  savePlant(plantId: ID!): User!
+  addBlog(blogText: String!): User!
   removeBlog(_id: ID!): User!
-  addComment(_id: ID!, commentBody: String!): Blog
+  addComment(_id: ID!, commentBody: String!): Blog!
 }
 `;
 

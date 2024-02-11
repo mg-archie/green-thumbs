@@ -46,19 +46,28 @@ const resolvers = {
 
       return { token, user };
     },
-    savePlant: async (parent, { _id }, context) => {
-      console.log('plantInput: ', _id);
+    savePlant: async (parent, { plantId }, context) => {
+      console.log('plantInput: ', plantId);
       console.log(context.user);
-      if (context.user) {
-        console.log(context.user._id);
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $push: { favouritedPlants: _id } },
-          { new: true, runValidators: true }
-          );
-          return updatedUser;
-        }
-      throw new AuthenticationError();
+      if (!context.user) {
+        throw new AuthenticationError();
+      }
+      // Find the plant by ID
+      const plant = await Plant.findOneOrCreate(plantId);
+     
+
+      if (!plant) {
+        throw new Error('Plant not found.');
+      }
+      console.log(context.user._id);
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { favouritedPlants: plant._id } },
+        { new: true }
+      )
+      .populate("favouritedPlants");
+      return updatedUser;
+      
     },
     //plantId needs to be changed once we figure out API
     removePlant: async (parent, { _id }, context) => {
@@ -78,24 +87,25 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError('You must be logged in to add a blog.');
       }
-  
+
       try {
         // Create a new blog
         const newBlog = new Blog({
           blogText,
-          blogAuthor: context.user._id, 
+          blogAuthor: context.user._id,
         });
-  
+
         // Save the blog to the database
         await newBlog.save();
-  
+
         // Add the blog to the user's list of blogs
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { blogs: newBlog._id } }, 
+          { $push: { blogs: newBlog._id } },
           { new: true }
-        );
-  
+        )
+        .populate('blogs');
+
         return user;
       } catch (error) {
         throw new Error('Failed to add blog: ' + error.message);
@@ -132,14 +142,11 @@ const resolvers = {
         }
 
         // create the comment
-        const newComment = new Comment({
+        const newComment =  await Comment.create({
           commentBody,
           commentAuthor: context.user._id,
 
         });
-
-        // Save the comment to the database
-        await newComment.save();
 
 
         console.log(newComment._id);
@@ -158,7 +165,9 @@ const resolvers = {
           { _id },
           { $push: { comments: newComment._id } },
           { new: true }
-        );
+        )
+        .populate('comments');
+
 
         return updatedBlog;
       } catch (error) {
