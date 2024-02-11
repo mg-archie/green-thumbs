@@ -50,7 +50,7 @@ const SavedBlogs = () => {
         <h2 className='pt-5'>
           {userData.savedBlogs?.length
             ? `Viewing ${userData.savedBlogs.length} saved ${userData.savedBlogs.length === 1 ? 'blog' : 'blogs'}:`
-            : 'You have no saved blogs!'}
+            : ' no blogs!'}
         </h2>
         <Row>
           {userData.savedBlogs?.map((blog) => (

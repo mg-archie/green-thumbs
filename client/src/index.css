@@ -44,7 +44,13 @@
   font-size: 30px;
   color: var(--titlegreen) !important;
   text-shadow: 0 0 8px var(--navyellow), 0 0 3px var(--navyellow), 0 0 7px var(--navyellow), 0 0 20px var(--navyellow); /* Glow effect */
+}
 
+.title2 {
+  font-family: "Single Day", cursive;
+  font-size: 25px;
+  color: var(--titlegreen) !important;
+  text-shadow: 0 0 8px var(--navyellow), 0 0 3px var(--navyellow), 0 0 7px var(--navyellow), 0 0 20px var(--navyellow); /* Glow effect */
 }
 
 .searchB {
