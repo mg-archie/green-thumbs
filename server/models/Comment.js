@@ -8,14 +8,14 @@ const commentSchema = new Schema(
             required: true,
             maxlength: 280,
         },
-        username: {
+        commentAuthor: {
             type: String,
             required: true,
         },
-        commentAuthor: {
-              type: Schema.Types.ObjectId,
-              ref: 'commentAuthor'
-        },
+        // commentAuthor: {
+        //       type: Schema.Types.ObjectId,
+        //       ref: 'commentAuthor'
+        // },
     },
 );
 

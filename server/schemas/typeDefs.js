@@ -12,6 +12,13 @@ type Blog {
   _id: ID!
   blogAuthor: String
   blogText: String
+  comments: [Comment]
+}
+
+type Comment {
+  _id: ID!
+  commentBody: String
+  commentAuthor: String
 }
 
 type Plant {
@@ -41,15 +48,9 @@ input SavedPlantInput {
 }
 
 type Query {
-  login(email: String!, password: String!): AuthPayload!
+  me: User
 }
 
-type Query {
-   me: User
-   users: [User]
-   user(username: String!): User
- }
- 
 type Mutation {
   
   login(email: String!, password: String!): AuthPayload!
@@ -58,6 +59,7 @@ type Mutation {
   savePlant(_id: ID!): User!
   addBlog(blogText: String!): Blog
   removeBlog(_id: ID!): User!
+  addComment(_id: ID!, commentBody: String!): Blog
 }
 `;
 
