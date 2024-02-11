@@ -15,7 +15,7 @@ import { removePlantId } from '../utils/localStorage';
 const SavedPlants = () => {
   const [removePlant, { error }] = useMutation(REMOVE_PLANT);
   const { data, loading, refetch } = useQuery(QUERY_ME);
-  let userData = data?.me || {};
+  let userData = data?.me || { savedPlants: [] };
 
   // function that accepts the plant's mongo _id value as param and deletes the plant from the database
   const handleDeletePlant = async (plantId) => {
@@ -46,19 +46,18 @@ const SavedPlants = () => {
 
   return (
     <>
-      <div fluid='true' className="text-light bg-dark p-5">
+      <div fluid='true' className="text-light p-5">
         <Container>
-          <h1>Viewing saved plants!</h1>
         </Container>
       </div>
       <Container>
         <h2 className='pt-5'>
-          {userData.savedPlants.length
+          {userData.savedPlants?.length
             ? `Viewing ${userData.savedPlants.length} saved ${userData.savedPlants.length === 1 ? 'plant' : 'plants'}:`
             : 'You have no saved plants!'}
         </h2>
         <Row>
-          {userData.savedPlants.map((plant) => {
+          {userData.savedPlants?.map((plant) => {
             return (
               <Col md="4">
                 <Card key={plant.plantId} border='dark'>
