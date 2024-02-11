@@ -46,11 +46,11 @@ const resolvers = {
 
       return { token, user };
     },
-    savePlant: async (parent, { _id }, context) => {
+    savePlant: async (parent, { plantId }, context) => {
       console.log('plantInput: ', _id);
       console.log(context.user);
       if (context.user) {
-        console.log(context.user._id);
+        console.log(context.user.plantId);
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $push: { favouritedPlants: _id } },

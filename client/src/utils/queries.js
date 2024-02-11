@@ -16,3 +16,18 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_ALL_BLOGS = gql`
+  query allBlogs {
+    allBlogs {
+      _id
+      blogText
+      blogAuthor
+      comments {
+        _id
+        commentBody
+        commentAuthor
+      }
+    }
+  }
+`;
