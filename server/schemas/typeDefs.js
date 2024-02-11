@@ -31,13 +31,10 @@ type Plant {
   link: String
 }
 
-
 type AuthPayload {
   token: String!
   user: User!
 }
-
-
 
 input SavedPlantInput {
   plantId: String!
@@ -48,11 +45,17 @@ input SavedPlantInput {
 }
 
 type Query {
+  login(email: String!, password: String!): AuthPayload!
+}
+
+type Query {
   me: User
+  users: [User]
+  user(username: String!): User
 }
 
 type Mutation {
-  
+
   login(email: String!, password: String!): AuthPayload!
   addUser(username: String!, email: String!, password: String!): AuthPayload!
   removePlant(_id: ID!): User!
@@ -65,5 +68,5 @@ type Mutation {
 
 module.exports = typeDefs;
 
-  // favouritedPlants(plantInput: PlantInput): User
-  // removePlant(plantId: ID!): User
+// favouritedPlants(plantInput: PlantInput): User
+// removePlant(plantId: ID!): User

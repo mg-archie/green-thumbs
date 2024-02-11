@@ -1,75 +1,35 @@
-import {
-  Container,
-  Card,
-  Button,
-  Row,
-  Col
-} from 'react-bootstrap';
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { QUERY_ALL_BLOGS } from '../utils/queries'; 
+import { Container, Card, Row, Col } from 'react-bootstrap';
 
-import { useMutation, useQuery } from '@apollo/client';
-import { REMOVE_BLOG } from '../utils/mutations';
-import { QUERY_ME } from '../utils/queries'; 
-import Auth from '../utils/auth';
-import { removeBlogId } from '../utils/localStorage'; 
+const BlogsPage = () => {
+  const { data, loading, error } = useQuery(QUERY_ALL_BLOGS);
 
-const SavedBlogs = () => {
-  const [removeBlog, { error }] = useMutation(REMOVE_BLOG);
-  const { data, loading, refetch } = useQuery(QUERY_ME);
-  let userData = data?.me || {};
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error! {error.message}</div>;
 
-  const handleDeleteBlog = async (blogId) => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+  const blogs = data?.allBlogs || [];
 
-    if (!token) {
-      return false;
-    }
-    try {
-      await removeBlog({
-        variables: { blogId }
-      });
-
-      const { data } = await refetch();
-      userData = data.me;
-      removeBlogId(blogId);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  if (loading) {
-    return <h2>LOADING...</h2>;
-  }
-  
   return (
-    <>
-      <div fluid='true' className="text-light p-5">
-        <Container>
-        </Container>
-      </div>
-      <Container>
-        <h2 className='pt-5'>
-          {userData.savedBlogs?.length
-            ? `Viewing ${userData.savedBlogs.length} saved ${userData.savedBlogs.length === 1 ? 'blog' : 'blogs'}:`
-            : ' no blogs!'}
-        </h2>
-        <Row>
-          {userData.savedBlogs?.map((blog) => (
-            <Col md="4" key={blog.blogId}>
-              <Card border='dark'>
-                <Card.Body>
-                  <Card.Title>{blog.title}</Card.Title>
-                  <Card.Text>{blog.description}</Card.Text>
-                  <Button className='btn-block btn-danger' onClick={() => handleDeleteBlog(blog.blogId)}>
-                    Delete this Blog!
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </>
+    <Container>
+      <h2 className='pt-5'>All Blogs</h2>
+      <Row>
+        {blogs.map(({_id, blogText, blogAuthor, comments}) => (
+          <Col key={_id} md="4">
+            <Card border='dark'>
+              <Card.Body>
+                <Card.Title>{blogAuthor}</Card.Title>
+                <Card.Text>{blogText}</Card.Text>
+                <Card.Text>{comments}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 };
 
-export default SavedBlogs;
+export default BlogsPage;
+
