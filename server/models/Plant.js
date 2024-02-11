@@ -37,7 +37,7 @@ plantSchema.statics.findOneOrCreate = async function(plantId) {
  if (savedPlant) {
    return savedPlant
  }
- const response = await fetch (`https://perenual.com/api/species-list?key=sk-S9zG65c4f45dab87a4077&page=1${plantId}`)
+ const response = await fetch (`https://perenual.com/api/species/details/${plantId}?key=sk-S9zG65c4f45dab87a4077`)
  if(!response.ok) {
   return null;
  }
