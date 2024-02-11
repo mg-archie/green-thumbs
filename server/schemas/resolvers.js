@@ -115,6 +115,56 @@ const resolvers = {
       }
       throw new AuthenticationError();
     },
+    addComment: async (parent, { _id, commentBody }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to add a comment.');
+      }
+
+      console.log(context.user);
+
+      try {
+        // Find the blog by ID
+        const blog = await Blog.findById(_id);
+        console.log(_id);
+
+        if (!blog) {
+          throw new Error('Blog not found.');
+        }
+
+        // create the comment
+        const newComment = new Comment({
+          commentBody,
+          commentAuthor: context.user._id,
+
+        });
+
+        // Save the comment to the database
+        await newComment.save();
+
+
+        console.log(newComment._id);
+        console.log(context.user._id);
+        //Add the comment to the user's list of blogs
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $push: { comments: newComment._id } },
+          { new: true }
+        );
+        console.log(context.user._id);
+        console.log(newComment._id);
+
+        // Add the comment to the blog
+        const updatedBlog = await Blog.findOneAndUpdate(
+          { _id },
+          { $push: { comments: newComment._id } },
+          { new: true }
+        );
+
+        return updatedBlog;
+      } catch (error) {
+        throw new Error('Failed to add comment: ' + error.message);
+      }
+    },
   },
 };
 
