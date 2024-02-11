@@ -11,19 +11,19 @@ db.once('open', async () => {
   const comments = await Comment.insertMany([
     {
     commentBody: "great idea",
-    username: "Mike",
+    commentAuthor: "Mike",
   },
   {
     commentBody: "wow",
-    username: "Peter",
+    commentAuthor: "Peter",
   },
   {
     commentBody: "nice",
-    username: "Myles",
+    commentAuthor: "Myles",
   },
   {
     commentBody: "excellent",
-    username: "Jane",
+    commentAuthor: "Jane",
   },
 ]);
 

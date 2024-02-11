@@ -60,7 +60,7 @@ const SavedPlants = () => {
           {userData.savedPlants?.map((plant) => {
             return (
               <Col md="4">
-                <Card key={plant.plantId} border='dark'>
+                <Card key={plant.plant_id} border='dark'>
                   <Card.Body>
                     <Card.Title>{plant.name}</Card.Title>
                     <Card.Text>{plant.description}</Card.Text>
