@@ -7,7 +7,8 @@ import {
   Button,
   Card,
   Row,
-  Dropdown
+  Dropdown,
+  CardImg
 } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
@@ -30,24 +31,50 @@ const SearchPlants = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    
     if (!searchInput) {
       return false;
     }
+  
+    // Clear previous search results before starting a new search
+    handleClearSearch();
+  
     try {
       const response = await searchPerenual(searchInput);
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
       const plantData = await response.json();
+  
       setSearchedPlants(plantData.data);
-      console.log(plantData);
-      setSearchInput('');
+      // Save to localStorage
+      localStorage.setItem('searchedPlants', JSON.stringify(plantData.data));
     } catch (err) {
       console.error(err);
+    } finally {
+      // Clear the search input field after search
+      setSearchInput('');
     }
   };
+  
+  
+  useEffect(() => {
+    // Load saved plants data from localStorage
+    const savedPlantsData = localStorage.getItem('searchedPlants');
+    if (savedPlantsData) {
+      setSearchedPlants(JSON.parse(savedPlantsData));
+    }
+  }, []);
+  
+  const handleClearSearch = () => {
+    // Clear localStorage
+    localStorage.removeItem('searchedPlants');
+    // Clear state
+    setSearchedPlants([]);
+  };
+  
+  const [savePlantMutation, { error: savePlantError }] = useMutation(SAVE_PLANT);
 
-  // create function to handle saving a plant to our database
   const handleSavePlant = async (plantId) => {
     const plantToSave = searchedPlants.find((plant) => plant.plantId === plantId);
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -55,9 +82,9 @@ const SearchPlants = () => {
       return false;
     }
     try {
-      const { data } = await savePlant({
-        variables: { plantInput: plantToSave }
-      })
+      await savePlantMutation({
+        variables: { plantInput: { ...plantToSave } }
+      });
       setSavedPlantIds([...savedPlantIds, plantToSave.plantId]);
     } catch (err) {
       console.error(err);
@@ -94,20 +121,17 @@ const SearchPlants = () => {
       </Container>
     </div>
 
-      <Container>
-        <h2 className='pt-5'>
-          {searchedPlants.length
-            ? `Viewing ${searchedPlants.length} results:`
-            : ''}
-        </h2>
-        <Row>
+      <Container className='p-5'>
+        <Row className='row-gap-3'>
           {searchedPlants.map((plant) => {
             return (
-              <Col md="4" key={plant.plantId}>
-                <Card border='dark'>
+              <Col md="6" key={plant.plantId}>
+                <Card border='white'>
                   <Card.Body>
-                    <Card.Title>{plant.name}</Card.Title>
-                    <Card.Text>{plant.description}</Card.Text>
+                    <Card.Title className='text-center title2'>{plant.common_name}</Card.Title>
+                    <Card.Text>Amount of light: {plant.sunlight}</Card.Text>
+                    <Card.Text>Frequency of watering: {plant.watering}</Card.Text>
+                    <CardImg src={plant.default_image?.medium_url || ''} alt={plant.common_name} className='p-2'/>
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPlantIds?.some((savedPlantId) => savedPlantId === plant.plantId)}
