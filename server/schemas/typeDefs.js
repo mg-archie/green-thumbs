@@ -48,6 +48,7 @@ input PlantInput {
 
 type Query {
   login(email: String!, password: String!): AuthPayload!
+  allBlogs: [Blog]
 }
 
 type Query {

@@ -61,16 +61,44 @@ console.log('comments seeded');
 
   const blogs = await Blog.insertMany([
     {
-      blogText: 'My garden is the best!',
-      blogAuthor: 'Jane',
+      blogText: "Embarking on a journey to explore the wonders of gardening! From planting seeds to watching them bloom into beautiful flowers, the joy of gardening knows no bounds.",
+      blogAuthor: "GardeningGuru123",
     },
     {
-      blogText: 'Nice garden!',
-      blogAuthor: 'Mike',
+      blogText: "In this blog, I'll share with you my top tips and tricks for maintaining a blooming garden all year round. From soil preparation to pest control, get ready to elevate your gardening game!",
+      blogAuthor: "FlowerFanatic88",
     },
     {
-      blogText: 'Pretty!',
-      blogAuthor: 'Fred',
+      blogText: "Join me on my journey as a novice gardener, learning the ropes and discovering the magic of nurturing plants. Every setback is a lesson learned, and every bloom is a triumph!",
+      blogAuthor: "GreenThumbNewbie",
+    },
+    {
+      blogText: "Transforming my backyard into a paradise has been a labor of love. Follow along as I share my experiences, successes, and occasional failures in creating an oasis of beauty and tranquility.",
+      blogAuthor: "BackyardBliss",
+    },
+    {
+      blogText: "For me, gardening is more than just a hobby—it's a spiritual practice. Finding solace and peace in nature's embrace, I invite you to join me in cultivating a deeper connection with the Earth.",
+      blogAuthor: "NatureLover365",
+    },
+    {
+      blogText: "Welcome to my gardening diary, where I document the journey from seed to bloom. Each entry captures the excitement of new growth, the challenges of tending to a garden, and the beauty of nature's cycle.",
+      blogAuthor: "BloomDiaries",
+    },
+    {
+      blogText: "Exploring the therapeutic benefits of gardening: a journey towards wellness and mindfulness. From reducing stress to fostering creativity, discover how gardening can nurture both the body and soul.",
+      blogAuthor: "MindfulGardener",
+    },
+    {
+      blogText: "Unleash your inner artist with gardening as your canvas! In this blog, I'll share creative gardening ideas, from sculpting hedges to designing floral arrangements, to transform your outdoor space into a masterpiece.",
+      blogAuthor: "ArtisticGardener",
+    },
+    {
+      blogText: "From balcony gardens to rooftop oases, small-space gardening opens up endless possibilities. Join me as I explore innovative techniques and space-saving hacks to maximize greenery in compact urban environments.",
+      blogAuthor: "UrbanJungleExplorer",
+    },
+    {
+      blogText: "Discover the beauty of heirloom gardening: preserving the legacy of ancient plant varieties and connecting with generations past. Join me on a journey through history as we sow the seeds of tradition.",
+      blogAuthor: "HeritageHarvester",
     },
   ]);
 

@@ -24,6 +24,9 @@ const resolvers = {
       .populate('favouritedPlants blogs')
       .select('-__v -password');
     },
+    allBlogs: async () => {
+      return Blog.find({})
+    }
   },
 
   Mutation: {

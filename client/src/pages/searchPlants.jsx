@@ -114,19 +114,7 @@ const SearchPlants = () => {
           <Button variant="outline-secondary border border-white searchB" onClick={handleFormSubmit} >
             Search
           </Button>
-          <Dropdown as={InputGroup.Append}>
-            <Button variant="outline-secondary border border-white">
-              <span className="visually-hidden">Toggle Dropdown</span>
-            </Button>
-            <Dropdown.Toggle split variant="outline-secondary border border-white" id="dropdown-split-basic" />
-            <Dropdown.Menu>
-              <Dropdown.Item href="#">Action</Dropdown.Item>
-              <Dropdown.Item href="#">Another action</Dropdown.Item>
-              <Dropdown.Item href="#">Something else here</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item href="#">Separated link</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+
         </InputGroup>
       </Container>
     </div>
@@ -145,7 +133,7 @@ const SearchPlants = () => {
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPlantIds?.some((savedPlantId) => savedPlantId === plant.plantId)}
-                        className='btn-block btn-info'
+                        className='btn btn-success searchB'
                         onClick={() => handleSavePlant(plant.plantId)}>
                         {savedPlantIds?.some((savedPlantId) => savedPlantId === plant.plantId)
                           ? 'This plant has already been saved!'
