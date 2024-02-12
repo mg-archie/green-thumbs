@@ -19,18 +19,21 @@ const plantSchema = new Schema({
   image: {
     type: String,
   },
-  lowLight: {
-    type: Boolean,
+  sunlight: {
+    type: [String],
     // required: true,
   },
   indoor: {
     type: Boolean,
     // required: true,
   },
+  watering: {
+    type: String,
+  }
 });
 
 plantSchema.statics.findOneOrCreate = async function(plantId) {
- // Find the plant by ID
+ // Find the plant by ID (NEEDS FIXING)
  const savedPlant = await Plant.findOne({plantId});
 
 
@@ -51,8 +54,11 @@ plantSchema.statics.findOneOrCreate = async function(plantId) {
 //TODO: ADD THE PLANT DATA TO THE PROPERTIES DEFINED ABOVE
 name: name,
 description: description,
-plantId: plantId,
-image: default_image ? default_image.thumbnail : null,
+plantId: plantId.toString(),
+image: data.medium_url ? default_image.thumbnail : null,
+sunlight: data.sunlight,
+indoor: data.indoor,
+watering: data.watering
  })
  return newPlant;
 }

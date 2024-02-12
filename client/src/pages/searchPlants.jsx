@@ -44,11 +44,21 @@ const SearchPlants = () => {
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
-      const plantData = await response.json();
-  
-      setSearchedPlants(plantData.data);
+      const { data } = await response.json();
+      
+      const plantData = data.map((plant) => ({
+        plantId: plant.id.toString(),
+        name: plant.common_name,
+        description: plant.description,
+        image: plant.default_image?.medium_url,
+        sunlight: plant.sunlight,
+        indoor: plant.indoor,
+        watering: plant.watering,
+      }));
+
+      setSearchedPlants(plantData);
       // Save to localStorage
-      localStorage.setItem('searchedPlants', JSON.stringify(plantData.data));
+      localStorage.setItem('searchedPlants', JSON.stringify(plantData));
     } catch (err) {
       console.error(err);
     } finally {
@@ -128,10 +138,10 @@ const SearchPlants = () => {
               <Col md="6" key={plant.plantId}>
                 <Card border='white'>
                   <Card.Body>
-                    <Card.Title className='text-center title2'>{plant.common_name}</Card.Title>
+                    <Card.Title className='text-center title2'>{plant.name}</Card.Title>
                     <Card.Text>Amount of light: {plant.sunlight}</Card.Text>
                     <Card.Text>Frequency of watering: {plant.watering}</Card.Text>
-                    <CardImg src={plant.default_image?.medium_url || ''} alt={plant.common_name} className='p-2'/>
+                    <CardImg src={plant.image || ''} alt={plant.name} className='p-2'/>
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPlantIds?.some((savedPlantId) => savedPlantId === plant.plantId)}

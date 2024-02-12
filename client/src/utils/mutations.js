@@ -34,9 +34,10 @@ export const SAVE_PLANT = gql`
       savedPlants {
         plantId
         name
-        image
         description
-        link
+        image
+        sunLight
+        indoor
       }
     }
   }
