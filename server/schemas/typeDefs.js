@@ -4,7 +4,7 @@ type User {
   username: String
   email: String
   plantCount: Int
-  favouritedPlants: [Plant]
+  savedPlants: [Plant]
   blogs: [Blog]
 }
 
@@ -23,12 +23,12 @@ type Comment {
 
 type Plant {
   plantId: String!
+  name: String
   description: String
-  name: String!
   image: String
-  lowLight: Boolean
+  sunLight: [String]
   indoor: Boolean
-  link: String
+  watering: String
 }
 
 type AuthPayload {
@@ -36,12 +36,14 @@ type AuthPayload {
   user: User!
 }
 
-input SavedPlantInput {
+input PlantInput {
   plantId: String!
-  name: String!
-  description: String!
-  default_image: String
-  link: String
+  name: String
+  description: String
+  image: String
+  sunlight: [String]
+  indoor: Boolean
+  watering: String
 }
 
 type Query {
@@ -59,7 +61,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload!
   addUser(username: String!, email: String!, password: String!): AuthPayload!
   removePlant(_id: ID!): User!
-  savePlant(plantId: ID!): User!
+  savePlant(plantInput: PlantInput): User!
   addBlog(blogText: String!): User!
   removeBlog(_id: ID!): User!
   addComment(_id: ID!, commentBody: String!): Blog!
