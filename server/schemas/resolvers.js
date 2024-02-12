@@ -1,10 +1,13 @@
 // import user model
-const { User, Blog } = require('../models');
+
+const { User, Blog, Comment } = require('../models');
+
 const { Plant } = require('../models');
 // import sign token function from auth
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require("apollo-server-express");
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 const resolvers = {
   Query: {
@@ -20,7 +23,8 @@ const resolvers = {
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
-        .select('-__v -password');
+      .populate('favouritedPlants blogs')
+      .select('-__v -password');
     },
     allBlogs: async () => {
       return Blog.find({})
