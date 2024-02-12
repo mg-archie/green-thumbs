@@ -23,10 +23,10 @@ type Comment {
 
 type Plant {
   plantId: String!
-  name: String
+  name: String!
   description: String
   image: String
-  sunLight: [String]
+  sunlight: [String]
   indoor: Boolean
   watering: String
 }
@@ -61,7 +61,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload!
   addUser(username: String!, email: String!, password: String!): AuthPayload!
   removePlant(_id: ID!): User!
-  savePlant(plantInput: PlantInput): User!
+  savePlant(plantId: ID!): User!
   addBlog(blogText: String!): User!
   removeBlog(_id: ID!): User!
   addComment(_id: ID!, commentBody: String!): Blog!
@@ -72,3 +72,4 @@ module.exports = typeDefs;
 
 // favouritedPlants(plantInput: PlantInput): User
 // removePlant(plantId: ID!): User
+// savePlant(plantInput: PlantInput): User!
