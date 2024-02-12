@@ -12,14 +12,14 @@ const BlogsPage = () => {
   const blogs = data?.allBlogs || [];
 
   return (
-    <Container>
-      <h2 className='pt-5'>All Blogs</h2>
-      <Row>
+    <Container className='mt-5 mb-5 p-5'>
+      <h2 className='pt-5'></h2>
+      <Row className='row-gap-3'> 
         {blogs.map(({_id, blogText, blogAuthor, comments}) => (
-          <Col key={_id} md="4">
-            <Card border='dark'>
+          <Col key={_id} md="6">
+            <Card border='white'>
               <Card.Body>
-                <Card.Title>{blogAuthor}</Card.Title>
+                <Card.Title className='title2'>{blogAuthor}</Card.Title>
                 <Card.Text>{blogText}</Card.Text>
                 <Card.Text>{comments}</Card.Text>
               </Card.Body>
