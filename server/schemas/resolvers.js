@@ -1,5 +1,5 @@
 // import user model
-const { User } = require('../models');
+const { User, Blog } = require('../models');
 const { Plant } = require('../models');
 // import sign token function from auth
 const { signToken } = require('../utils/auth');
@@ -22,6 +22,9 @@ const resolvers = {
       return User.findOne({ username })
         .select('-__v -password');
     },
+    allBlogs: async () => {
+      return Blog.find({})
+    }
   },
 
   Mutation: {
