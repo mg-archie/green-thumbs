@@ -22,7 +22,7 @@ const userSchema = new Schema({
       minlength: 5
     },
     // set savedPlants to be an array of data that adheres to the plantSchema
-    favouritedPlants: [
+    savedPlants: [
       {
           type: Schema.Types.ObjectId,
           ref: 'Plant',
@@ -76,7 +76,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 // when we query a user, we'll also get another field called `plantCount` with the number of saved books we have
 userSchema.virtual('plantCount').get(function () {
-  return this.favouritedPlants.length;
+  return this.savedPlants.length;
 });
 // when we query a user, we'll also get another field called `commentCount` with the number of saved books we have
 userSchema.virtual('commentCount').get(function () {

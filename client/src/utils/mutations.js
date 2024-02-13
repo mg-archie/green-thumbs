@@ -31,14 +31,7 @@ export const SAVE_PLANT = gql`
       _id
       username
       email
-      savedPlants {
-        plantId
-        name
-        description
-        image
-        sunLight
-        indoor
-      }
+      savedPlants
     }
   }
 `;
@@ -46,7 +39,7 @@ export const SAVE_PLANT = gql`
 export const REMOVE_PLANT = gql`
   mutation removePlant($plantId: ID!) {
     removePlant(plantId: $plantId) {
-      _id
+      plantId
     }
   }
 `;

@@ -6,16 +6,32 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      savedPlants {
-        plantId
-        name
-        description
-        image
-        link
-      }
+      savedPlants
     }
   }
 `;
+
+export const QUERY_PLANTS = gql`
+query plants($plantIds: [ID]) {
+  plants(plantIds: $plantIds) {
+    plantId
+    name
+    description
+    image
+    indoor
+    sunlight
+    watering
+  }
+}
+`
+
+export const QUERY_PLANT = gql`
+  query plant($plantId: ID) {
+    plant(plantId: $plantId) {
+      plantId
+    }
+  }
+`
 
 export const QUERY_ALL_BLOGS = gql`
   query allBlogs {
