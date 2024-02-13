@@ -52,6 +52,8 @@ Perenual External API: https://perenual.com/docs/api
 
 Bootcamp modules, activities, and challenge assignments
 
+Class Instructor, TA, and Bootcamp tutors
+
 
 ## License
 
