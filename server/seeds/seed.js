@@ -104,7 +104,7 @@ console.log('comments seeded');
 
   console.log('blogs seeded');
 
-  const plants = await Plant.insertMany([
+  /*const plants = await Plant.insertMany([
     { name: "tree", description: "nice", plantId: "123", lowLight: "true", indoor: "false" },
     { name: "flower", description: "pretty", plantId: "456", lowLight: "true", indoor: "false" },
     { name: "leaf", description: "light as a feather", plantId: "789", lowLight: "false", indoor: "true" },
@@ -112,7 +112,7 @@ console.log('comments seeded');
     { name: "shrub", description: "beautiful!", plantId: "444", lowLight: "true", indoor: "false" },
   ]);
 
-  console.log('plants seeded');
+  console.log('plants seeded');*/
 
   process.exit();
 });

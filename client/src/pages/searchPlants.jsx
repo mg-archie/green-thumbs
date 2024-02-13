@@ -87,6 +87,7 @@ const SearchPlants = () => {
 
   const handleSavePlant = async (plantId) => {
     const plantToSave = searchedPlants.find((plant) => plant.plantId === plantId);
+    console.log(plantToSave);
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     if (!token) {
       return false;

@@ -4,7 +4,7 @@ type User {
   username: String
   email: String
   plantCount: Int
-  savedPlants: [Plant]
+  savedPlants: [ID]
   blogs: [Blog]
 }
 
@@ -22,7 +22,7 @@ type Comment {
 }
 
 type Plant {
-  plantId: String!
+  plantId: ID!
   name: String!
   description: String
   image: String
@@ -37,7 +37,7 @@ type AuthPayload {
 }
 
 input PlantInput {
-  plantId: String!
+  plantId: ID!
   name: String
   description: String
   image: String
@@ -57,12 +57,17 @@ type Query {
   user(username: String!): User
 }
 
+type Query {
+  plants(plantIds: [ID]): [Plant]
+  plant(plantId: ID): Plant
+}
+
 type Mutation {
 
   login(email: String!, password: String!): AuthPayload!
   addUser(username: String!, email: String!, password: String!): AuthPayload!
-  removePlant(_id: ID!): User!
-  savePlant(plantId: ID!): User!
+  removePlant(plantId: ID!): Plant!
+  savePlant(plantInput: PlantInput!): User!
   addBlog(blogText: String!): User!
   removeBlog(_id: ID!): User!
   addComment(_id: ID!, commentBody: String!): Blog!

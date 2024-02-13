@@ -23,8 +23,17 @@ const resolvers = {
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
-      .populate('favouritedPlants blogs')
+      .populate('savedPlants blogs')
       .select('-__v -password');
+    },
+    plants: async (parent, { plantIds }) => {
+      console.log(plantIds)
+      // console.log(Plant.find({ _id: { $in: plantIds }}))
+      return Plant.find({ _id: { $in: plantIds }})
+    },
+    plant: async(parent, { plantId }) => {
+      // console.log(Plant.find({ _id: plantId }))
+      return Plant.find({ _id: plantId })
     },
     allBlogs: async () => {
       return Blog.find({})
@@ -54,14 +63,14 @@ const resolvers = {
 
       return { token, user };
     },
-    savePlant: async (parent, { plantId }, context) => {
-      console.log('plantInput: ', plantId);
+    savePlant: async (parent, { plantInput }, context) => {
+      console.log('plantInput: ', plantInput);
       console.log(context.user);
       if (!context.user) {
         throw new AuthenticationError();
       }
       // Find the plant by ID
-      const plant = await Plant.findOneOrCreate(plantId);
+      const plant = await Plant.findOneOrCreate(plantInput);
      
 
       if (!plant) {
@@ -70,10 +79,9 @@ const resolvers = {
       console.log(context.user._id);
       const updatedUser = await User.findOneAndUpdate(
         { _id: context.user._id },
-        { $addToSet: { favouritedPlants: plant._id } },
+        { $push: { savedPlants: plant._id } },
         { new: true }
       )
-      .populate("favouritedPlants");
       return updatedUser;
       
     },
@@ -84,10 +92,14 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { favouritedPlants: _id } },
+          { $pull: { savedPlants: _id } },
           { new: true, runValidators: true }
         );
-        return updatedUser;
+        const removedPlant = await Plant.findById(_id);
+        return {
+          updatedUser,
+          removedPlant
+        };
       }
       throw new AuthenticationError();
     },

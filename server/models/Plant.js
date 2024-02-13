@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const { default: fetch } = require('node-fetch');
 
 
@@ -32,8 +32,10 @@ const plantSchema = new Schema({
   }
 });
 
-plantSchema.statics.findOneOrCreate = async function(plantId) {
+plantSchema.statics.findOneOrCreate = async function(plantInput) {
+  const plantId = plantInput.plantId
   // Find the plant by ID
+  console.log(plantId);
   const savedPlant = await Plant.findOne({plantId});
  
  
@@ -61,16 +63,16 @@ plantSchema.statics.findOneOrCreate = async function(plantId) {
  
   const newPlant = await Plant.create({
  //TODO: ADD THE PLANT DATA TO THE PROPERTIES DEFINED ABOVE
- name: common_name,
- description: description,
- plantId: plantId,
- image: default_image.medium_url,
- indoor: indoor,
- sunlight: sunlight,
- watering: watering,
+  name: common_name,
+  description: description,
+  plantId: plantId,
+  image: default_image.medium_url,
+  indoor: indoor,
+  sunlight: sunlight,
+  watering: watering,
   })
   return newPlant;
- }
+}
 
 // plantSchema.statics.findOneOrCreate = async function(plantId) {
 //  // Find the plant by ID (NEEDS FIXING)
