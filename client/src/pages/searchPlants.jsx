@@ -19,7 +19,6 @@ import { savePlant, searchPerenual } from '../utils/API';
 import { savePlantIds, getSavedPlantIds } from '../utils/localStorage';
 
 const SearchPlants = () => {
-  // create state for holding returned plant search data
   const [searchedPlants, setSearchedPlants] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [savedPlantIds, setSavedPlantIds] = useState(getSavedPlantIds());
@@ -37,7 +36,7 @@ const SearchPlants = () => {
     }
   
     // Clear previous search results before starting a new search
-    handleClearSearch();
+    // handleClearSearch();
   
     try {
       const response = await searchPerenual(searchInput);
@@ -58,7 +57,7 @@ const SearchPlants = () => {
 
       setSearchedPlants(plantData);
       // Save to localStorage
-      localStorage.setItem('searchedPlants', JSON.stringify(plantData));
+      // localStorage.setItem('searchedPlants', JSON.stringify(plantData));
     } catch (err) {
       console.error(err);
     } finally {
@@ -67,21 +66,20 @@ const SearchPlants = () => {
     }
   };
   
+  // useEffect(() => {
+  //   // Load saved plants data from localStorage
+  //   const savedPlantsData = localStorage.getItem('searchedPlants');
+  //   if (savedPlantsData) {
+  //     setSearchedPlants(JSON.parse(savedPlantsData));
+  //   }
+  // }, []);
   
-  useEffect(() => {
-    // Load saved plants data from localStorage
-    const savedPlantsData = localStorage.getItem('searchedPlants');
-    if (savedPlantsData) {
-      setSearchedPlants(JSON.parse(savedPlantsData));
-    }
-  }, []);
-  
-  const handleClearSearch = () => {
-    // Clear localStorage
-    localStorage.removeItem('searchedPlants');
-    // Clear state
-    setSearchedPlants([]);
-  };
+  // const handleClearSearch = () => {
+  //   // Clear localStorage
+  //   localStorage.removeItem('searchedPlants');
+  //   // Clear state
+  //   setSearchedPlants([]);
+  // };
   
   const [savePlantMutation, { error: savePlantError }] = useMutation(SAVE_PLANT);
 
