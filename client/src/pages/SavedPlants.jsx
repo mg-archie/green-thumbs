@@ -44,32 +44,30 @@ const SavedPlants = () => {
     }
   };
 
-  // if data isn't here yet, say so
   if (loading || plantsLoading) {
     return <h2>LOADING...</h2>;
   }
 
   return (
     <>
-      <div fluid='true' className="text-light p-5">
+      <div fluid='true' className="text-light ">
         <Container>
         </Container>
       </div>
-      <Container>
-        <h2 className='pt-5'>
-          {plants?.length
-            ? `Viewing ${plants?.length} saved ${plants?.length === 1 ? 'plant' : 'plants'}:`
-            : 'You have no saved plants!'}
+      <Container className='pt-5 mt-5 mb-5 p-5'>
+        <h2 >
         </h2>
-        <Row>
+        <Row className='row-gap-3'>
           {plants?.map((plant) => {
             console.log(data);
             return (
-              <Col md="4">
-                <Card key={plant.plant_id} border='dark'>
+              <Col md="6">
+                <Card key={plant.plant_id} border=''>
                   <Card.Body>
-                    <Card.Title>{plant.name}</Card.Title>
-                    <Card.Text>{plant.description}</Card.Text>
+                    <Card.Title className='text-center title2'>{plant.name}</Card.Title>
+                    <Card.Text>Amount of light: {plant.sunlight}</Card.Text>
+                    <Card.Text>Frequency of watering: {plant.watering}</Card.Text>
+                    <Card.Text>Description: {plant.description}</Card.Text>
                     <CardImg src={plant.image || ''} alt={plant.name} className='p-2'/>
                     <Button className='btn-block btn-danger' onClick={() => handleDeletePlant(plant.plantId)}>
                       Delete this Plant!
