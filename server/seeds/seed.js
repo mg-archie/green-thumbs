@@ -1,11 +1,11 @@
 const db = require('../config/connection');
 const { User, Plant, Blog, Comment } = require('../models');
 const cleanDB = require('./cleanDB');
-const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// const mongoose = require('mongoose');
+// mongoose.connect(process.env.MONGODB_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 db.once('open', async () => {
   await cleanDB('User', 'users');
   await cleanDB('Plant', 'plants');
