@@ -54,6 +54,8 @@ Bootcamp modules, activities, and challenge assignments
 
 Class Instructor, TA, and Bootcamp tutors
 
+Tutor Wesley Clements assisted with the resolvers.js, typeDefs.js, and plant.js model
+
 
 ## License
 
